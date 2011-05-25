@@ -1,8 +1,8 @@
 [user]
-	name = Yannis Chatzimichos
-	email = feedward@gmail.com
+    name = Yannis Chatzimichos
+    email = feedward@gmail.com
 [color]
-	ui = auto
+    ui = auto
 [alias]
     amend = commit --amend
     co = checkout
