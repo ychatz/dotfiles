@@ -1,0 +1,8 @@
+[user]
+	name = Yannis Chatzimichos
+	email = feedward@gmail.com
+[color]
+	ui = auto
+[alias]
+    amend = commit --amend
+    co = checkout
