@@ -67,6 +67,10 @@ imap <F1> <Esc>
 command! W :w
 command! Q :q
 
+" Terminal-consistent shortcut keys for command line
+cnoremap <C-A> <Home>
+cnoremap <C-K> <C-\>estrpart(getcmdline(), 0, getcmdpos() - 1)<CR>
+
 " Window navigation
 nnoremap <C-H> <C-W>h
 nnoremap <C-J> <C-W>j
