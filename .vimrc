@@ -30,12 +30,17 @@ endif
 
 " Appearance
 if has("gui_running")
+    "Scrollbars and toolbars are so 2011. Remove them!
     set guioptions -=T
     set guioptions -=L
     set guioptions -=r
+
+    "Set color scheme and font
     color solarized
     set background=light
     set guifont=Monaco:h12
+
+    "Maximize (lolmac)
     set lines=55
 else
     let &t_Co=16
