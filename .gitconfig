@@ -6,3 +6,5 @@
 [alias]
     amend = commit --amend
     co = checkout
+[merge]
+    tool = vimdiff
