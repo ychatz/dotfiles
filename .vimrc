@@ -19,7 +19,6 @@ set softtabstop=4
 set shiftwidth=4
 set expandtab
 
-"autocmd FileType javascript setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
 " Encoding
@@ -30,17 +29,17 @@ endif
 
 " Appearance
 if has("gui_running")
-    "Scrollbars and toolbars are so 2011. Remove them!
+    " Scrollbars and toolbars are so 2011. Remove them!
     set guioptions -=T
     set guioptions -=L
     set guioptions -=r
 
-    "Set color scheme and font
+    " Set color scheme and font
     color solarized
     set background=light
     set guifont=Monaco:h12
 
-    "Maximize (lolmac)
+    " Maximize (lolmac)
     set lines=55
 else
     let &t_Co=16
@@ -51,6 +50,7 @@ endif
 set laststatus=2
 
 set report=0
+set showcmd
 
 set autoindent
 set nowrap
@@ -89,6 +89,15 @@ function! InsertTabWrapper()
 endfunction
 inoremap <Tab> <C-R>=InsertTabWrapper()<CR>
 inoremap <S-Tab> <C-P>
+
+"---------------------------------------------------------------------------------
+" Plugin Configuration
+"---------------------------------------------------------------------------------
+
+" Define Rroutes, RVroutes etc.
+autocmd User Rails Rnavcommand routes config/routes -suffix= -default=routes.rb
+" Define Rpublic
+autocmd User Rails Rnavcommand public public/ -suffix= -default=index.html -glob=**/*
 
 "---------------------------------------------------------------------------------
 " Custom commands mapped to leader key
@@ -150,11 +159,11 @@ map <leader>h :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> t
             \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
             \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>
 
-"Clean up file
+" Clean up file
 function! StripWhitespace ()
-    "Remove trailing whitespaces
+    " Remove trailing whitespaces
     exec ':%s/ *$/'
-    "Remove empty lines at the EOF
+    " Remove empty lines at the EOF
     normal G
     while getline('.') == ''
         normal dd
@@ -163,9 +172,9 @@ function! StripWhitespace ()
 endfunction
 map <leader>s :call StripWhitespace ()<cr>
 
-"Open .vimrc
+" Open .vimrc
 map <leader>v :e $MYVIMRC<cr>
 
-"Save, compile and run files
+" Save, compile and run files
 map <leader>cc :w<cr>:!gcc % && ./a.out<cr>
 map <leader>cp :w<cr>:!g++ % && ./a.out<cr>
