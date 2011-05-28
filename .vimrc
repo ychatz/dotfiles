@@ -44,6 +44,9 @@ if has("gui_running")
 else
     let &t_Co=16
     color yannis
+
+    " Enable the mouse
+    set mouse=a
 endif
 
 " Always show a status line
