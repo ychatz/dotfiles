@@ -95,7 +95,7 @@ inoremap <S-Tab> <C-P>
 "---------------------------------------------------------------------------------
 
 " Define Rroutes, RVroutes etc.
-autocmd User Rails Rnavcommand routes config/routes -suffix= -default=routes.rb
+autocmd User Rails Rnavcommand routes config/ -suffix= -default=routes.rb
 " Define Rpublic
 autocmd User Rails Rnavcommand public public/ -suffix= -default=index.html -glob=**/*
 
