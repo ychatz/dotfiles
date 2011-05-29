@@ -6,5 +6,7 @@
 [alias]
     amend = commit --amend
     co = checkout
+    c = commit
+    p = push
 [merge]
     tool = vimdiff
