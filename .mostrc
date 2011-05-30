@@ -1,0 +1,4 @@
+color status green gray
+
+setkey up "k"
+setkey down "j"
