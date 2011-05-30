@@ -1,10 +1,17 @@
 # Set history
-export HISTSIZE=100000
-export HISTFILE="$HOME/.history"
-export SAVEHIST=$HISTSIZE
+HISTSIZE=100000
+HISTFILE="$HOME/.history"
+SAVEHIST=$HISTSIZE
 
 # Set default pager
 export PAGER=most
+
+# Set word characters
+export WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
+
+# Try to correct the spelling of commangs
+setopt CORRECt
+SPROMPT='zsh: correct '%R' to '%r' ? ([Y]es/[N]o/[E]dit/[A]bort) '
 
 # Setup rvm
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
@@ -17,8 +24,8 @@ export PATH="$PATH:/usr/local/Cellar/smlnj/110.72/libexec/bin"
 #Custom commands inside
 export PATH="$PATH:$HOME/dotfiles/bin"
 
-autoload compinit
-compinit
+autoload -U compinit
+compinit -C
 
 # Wise message of the day (see /dotfiles/bin/randomcow)
 randomcow
@@ -83,6 +90,8 @@ alias l='ls -alGh'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias t='touch'
+alias mv='nocorrect mv -i'
+alias mkdir='nocorrect mkdir'
 
 # misc
 alias duh='du -csh'
@@ -91,6 +100,7 @@ alias df='df -h'
 alias jobs='jobs -p'
 alias cpu="ps ux | awk 'NR > 1 {res += \$3} END { print \"Total %CPU:\",res }'"
 alias c='clear'
+alias grep='grep --colour'
 
 # fucking vim
 alias h="man"
