@@ -33,6 +33,12 @@ randomcow
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # KEY BINDINGS
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+#
+# Ctrl-f      Insert sudo prefix
+# Esc-e       Edit the current line in editor
+# Ctrl-x f    Insert files
+#
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
 insert-root-prefix () {
    local prefix
@@ -49,8 +55,17 @@ insert-root-prefix () {
 }
 
 zle -N insert-root-prefix
-bindkey "^F" insert-root-prefix # make ctrl+f add sudo prefix
+bindkey "^F" insert-root-prefix
 
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '^[e' edit-command-line
+bindkey '^X^E' edit-command-line
+bindkey -M vicmd v edit-command-line
+
+autoload -U insert-files
+zle -N insert-files
+bindkey "^Xf" insert-files
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # PROMPT
@@ -87,6 +102,7 @@ alias r='rails'
 
 # file navigation
 alias l='ls -alGh'
+alias lsd='ls -ldG *(-/DN)' #list directories
 alias ..='cd ..'
 alias ...='cd ../..'
 alias t='touch'
