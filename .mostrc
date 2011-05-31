@@ -1,4 +1,6 @@
 color status green gray
 
+setkey bob "g"
+setkey eob "G"
 setkey up "k"
 setkey down "j"
