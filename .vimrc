@@ -106,8 +106,8 @@ autocmd User Rails Rnavcommand public public/ -suffix= -default=index.html -glob
 " Custom commands mapped to leader key
 "---------------------------------------------------------------------------------
 "
-" <space>rb : Open ruby documentation for word under cursor
-" <space>rr : Open rails documentation for word under cursor
+" <space>rb : Open ruby documentation for the word under cursor
+" <space>rr : Open rails documentation for the word under cursor
 "
 " <space>n  : Rename current file
 " <space>v  : Open .vimrc
@@ -118,7 +118,7 @@ autocmd User Rails Rnavcommand public public/ -suffix= -default=index.html -glob
 " <space>s  : Remove trailing whitespaces and empty lines at the EOF
 "
 " <space>cc : Save, compile and run (if the compilation was successful) C file.
-" <space>cp : Save, compile and run (if the compilation was successfull) C++ file.
+" <space>cp : Save, compile and run (if the compilation was successful) C++ file.
 "---------------------------------------------------------------------------------
 
 " Set mapleader (to <space>) for custom commands
