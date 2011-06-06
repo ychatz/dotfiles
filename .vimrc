@@ -62,10 +62,6 @@ set ignorecase smartcase
 
 set directory=/tmp
 
-" No idea why this is here. I don't use Esc anyway.
-map <F1> <Esc>
-imap <F1> <Esc>
-
 command! W :w
 command! Q :q
 
