@@ -119,8 +119,12 @@ autocmd User Rails Rnavcommand public public/ -suffix= -default=index.html -glob
 " <space>cc : Save, compile and run (if the compilation was successful) C file.
 " <space>cp : Save, compile and run (if the compilation was successful) C++ file.
 "
-" <space>t  : Run rspec tests for current file
-" <space>T  : Run rspec tests for all files
+" <space>f  : Open Command-T
+" <space>om : Open Command-T with the directory set to models
+" <space>oc : Open Command-T with the directory set to controllers
+" <space>ov : Open Command-T with the directory set to views
+" <space>os : Open Command-T with the directory set to spec
+" <space>ol : Open Command-T with the directory set to lib
 "---------------------------------------------------------------------------------
 
 " Set mapleader (to <space>) for custom commands
@@ -184,6 +188,10 @@ map <leader>v :e $MYVIMRC<cr>
 map <leader>cc :w<cr>:!gcc % && ./a.out<cr>
 map <leader>cp :w<cr>:!g++ % && ./a.out<cr>
 
-" Run tests
-map <leader>t :w<cr>:!rspec %<cr>
-map <leader>T :w<cr>:!rspec spec<cr>
+" Command-T shortcuts
+map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
+map <leader>ov :CommandTFlush<cr>\|:CommandT app/views<cr>
+map <leader>oc :CommandTFlush<cr>\|:CommandT app/controllers<cr>
+map <leader>om :CommandTFlush<cr>\|:CommandT app/models<cr>
+map <leader>os :CommandTFlush<cr>\|:CommandT spec<cr>
+map <leader>ol :CommandTFlush<cr>\|:CommandT lib<cr>
