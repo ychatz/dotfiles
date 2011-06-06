@@ -97,6 +97,13 @@ autocmd User Rails Rnavcommand routes config/ -suffix= -default=routes.rb
 " Define Rpublic
 autocmd User Rails Rnavcommand public public/ -suffix= -default=index.html -glob=**/*
 
+" Show dotfiles in CommandT
+let g:CommandTAlwaysShowDotFiles = 1
+" Ctrl-W opens current file in split window
+let g:CommandTAcceptSelectionSplitMap = '<C-w>'
+" No more than 5 lines
+let g:CommandTMaxHeight = 5
+
 "---------------------------------------------------------------------------------
 " Custom commands mapped to leader key
 "---------------------------------------------------------------------------------
