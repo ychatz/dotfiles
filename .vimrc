@@ -104,7 +104,6 @@ autocmd User Rails Rnavcommand public public/ -suffix= -default=index.html -glob
 "---------------------------------------------------------------------------------
 " Custom commands mapped to leader key
 "---------------------------------------------------------------------------------
-"
 " <space>rb : Open ruby documentation for the word under cursor
 " <space>rr : Open rails documentation for the word under cursor
 "
