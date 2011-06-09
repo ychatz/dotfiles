@@ -8,5 +8,8 @@
     co = checkout
     c = commit
     p = push
+    di = diff
+    pl = pull
+    last = log -1 HEAD
 [merge]
     tool = vimdiff
