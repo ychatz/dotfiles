@@ -13,3 +13,5 @@
     last = log -1 HEAD
 [merge]
     tool = vimdiff
+[color "branch"]
+    current = yellow reverse
