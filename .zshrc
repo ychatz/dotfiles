@@ -9,10 +9,6 @@ export PAGER=most
 # Set word characters
 export WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
 
-# Try to correct the spelling of commangs
-setopt CORRECt
-SPROMPT='zsh: correct '%R' to '%r' ? ([Y]es/[N]o/[E]dit/[A]bort) '
-
 # Setup rvm
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
