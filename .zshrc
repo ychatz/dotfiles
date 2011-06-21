@@ -21,11 +21,16 @@ export DYLD_LIBRARY_PATH=/usr/local/mysql/lib/
 export PATH="$PATH:/usr/local/mysql/bin/"
 export PATH="$PATH:/usr/local/Cellar/smlnj/110.72/libexec/bin"
 
+# Setup tomcat
+export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.5/Home
+export CATALINA_HOME=/usr/local/tomcat
+
 #Custom commands inside
 export PATH="$PATH:$HOME/dotfiles/bin"
 
 autoload -U compinit
 compinit -C
+zstyle ':completion:*' menu select
 
 # Wise message of the day (see /dotfiles/bin/randomcow)
 randomcow
