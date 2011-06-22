@@ -1,3 +1,5 @@
+"General {{{1
+"---------------------------------------------------------------------------------
 call pathogen#runtime_append_all_bundles()
 silent! call pathogen#helptags()
 
@@ -25,6 +27,9 @@ autocmd FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
 if exists("+encoding")
     set encoding=utf-8
 endif
+
+"Folding
+set foldmethod=marker
 
 " Appearance
 if has("gui_running")
@@ -87,9 +92,8 @@ function! InsertTabWrapper()
 endfunction
 inoremap <Tab> <C-R>=InsertTabWrapper()<CR>
 inoremap <S-Tab> <C-P>
-
-"---------------------------------------------------------------------------------
-" Plugin Configuration
+" }}}1
+" Plugin Configuration {{{1
 "---------------------------------------------------------------------------------
 
 " Define Rroutes, RVroutes etc.
@@ -103,9 +107,8 @@ let g:CommandTAlwaysShowDotFiles = 1
 let g:CommandTAcceptSelectionSplitMap = '<C-w>'
 " No more than 5 lines
 let g:CommandTMaxHeight = 5
-
-"---------------------------------------------------------------------------------
-" Custom commands mapped to leader key
+" }}}1
+" Custom commands mapped to leader key {{{1
 "---------------------------------------------------------------------------------
 " <space>rb : Open ruby documentation for the word under cursor
 " <space>rr : Open rails documentation for the word under cursor
@@ -197,3 +200,4 @@ map <leader>oc :CommandTFlush<cr>\|:CommandT app/controllers<cr>
 map <leader>om :CommandTFlush<cr>\|:CommandT app/models<cr>
 map <leader>os :CommandTFlush<cr>\|:CommandT spec<cr>
 map <leader>ol :CommandTFlush<cr>\|:CommandT lib<cr>
+" }}}1
