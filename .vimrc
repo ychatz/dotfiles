@@ -92,6 +92,38 @@ function! InsertTabWrapper()
 endfunction
 inoremap <Tab> <C-R>=InsertTabWrapper()<CR>
 inoremap <S-Tab> <C-P>
+
+" }}}1
+" Ruby refactoring {{{1
+"---------------------------------------------------------------------------------
+" Who uses ex-mode anyway?
+"
+" Qv : Inline variable
+"---------------------------------------------------------------------------------
+
+function! RefactorInlineVariable()
+    "Go to the beginning of the line
+    normal _
+    "Find the next occurence of variable
+    normal *
+    "Go back
+    normal ''
+    "Copy the variable name into register v
+    normal "vde
+    "Delete the = and the two spaces
+    normal 3x
+    "Copy the variable expression into register y
+    normal "yD
+    "Delete the rest of the line
+    normal dd
+    "Go back again to the next occurence
+    normal ''
+    "Replace all of the variable's occurences in this line
+    exec ':.s:\<' . @v . '\>:' . @y . ':gI'
+endfunction
+noremap Qv :silent :call RefactorInlineVariable()<cr>
+noremap QV :silent :call RefactorInlineVariable()<cr>
+
 " }}}1
 " Plugin Configuration {{{1
 "---------------------------------------------------------------------------------
@@ -107,6 +139,7 @@ let g:CommandTAlwaysShowDotFiles = 1
 let g:CommandTAcceptSelectionSplitMap = '<C-w>'
 " No more than 5 lines
 let g:CommandTMaxHeight = 5
+
 " }}}1
 " Custom commands mapped to leader key {{{1
 "---------------------------------------------------------------------------------
