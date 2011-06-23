@@ -69,8 +69,9 @@ set nohlsearch
 
 set directory=/tmp
 
-command! W :w
-command! Q :q
+command! -bar -nargs=0 SudoW   :setl nomod|silent exe 'write !sudo tee % >/dev/null'|let &mod = v:shell_error
+command! -bar -nargs=* -bang W :write<bang> <args>
+command! -bar -nargs=* -bang Q :quit<bang> <args>
 
 " Terminal-consistent shortcut keys for command line
 cnoremap <C-A> <Home>
@@ -165,7 +166,7 @@ let g:CommandTAcceptSelectionSplitMap = '<C-w>'
 let g:CommandTMaxHeight = 5
 
 " }}}1
-" Custom commands mapped to leader key {{{1
+" Leader key mappings {{{1
 "---------------------------------------------------------------------------------
 " <space>rb : Open ruby documentation for the word under cursor
 " <space>rr : Open rails documentation for the word under cursor
