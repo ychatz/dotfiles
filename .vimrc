@@ -64,6 +64,8 @@ set nowrap
 
 " Search
 set ignorecase smartcase
+set incsearch
+set nohlsearch
 
 set directory=/tmp
 
