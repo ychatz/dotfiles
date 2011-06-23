@@ -98,31 +98,53 @@ inoremap <S-Tab> <C-P>
 "---------------------------------------------------------------------------------
 " Who uses ex-mode anyway?
 "
-" Qv : Inline variable
+"   Qi : Inline variable
+" v_Qm : Extract method
 "---------------------------------------------------------------------------------
 
 function! RefactorInlineVariable()
-    "Go to the beginning of the line
+    " Go to the beginning of the line
     normal _
-    "Find the next occurence of variable
+    " Find the next occurence of variable
     normal *
-    "Go back
+    " Go back
     normal ''
-    "Copy the variable name into register v
+    " Copy the variable name into register v
     normal "vde
-    "Delete the = and the two spaces
+    " Delete the = and the two spaces
     normal 3x
-    "Copy the variable expression into register y
-    normal "yD
-    "Delete the rest of the line
+    " Copy the variable expression into register y
+    normal "cD
+    " Delete the rest of the line
     normal dd
-    "Go back again to the next occurence
+    " Go back again to the next occurence
     normal ''
-    "Replace all of the variable's occurences in this line
-    exec ':.s:\<' . @v . '\>:' . @y . ':gI'
+    " Replace all of the variable's occurences in this line
+    exec ':.s:\<' . @v . '\>:' . @c . ':gI'
 endfunction
-noremap Qv :silent :call RefactorInlineVariable()<cr>
-noremap QV :silent :call RefactorInlineVariable()<cr>
+map Qi :silent :call RefactorInlineVariable()<cr>
+map Qi :silent :call RefactorInlineVariable()<cr>
+
+function! RefactorExtractMethod() range
+        let method_name = input('(Extract method) New method name: ')
+        " Go to the last selected line
+        exec "normal! " . a:lastline . "G"
+        " Write the call to the new method below it
+        exec "normal! o" . method_name
+        " Go to the beginning of the current method
+        normal [m
+        " Insert the body of the new method above it
+        exec "normal! Odef " . method_name . "\<cr>end\<cr>"
+        " The body is 3 lines long, so everything moved down by 3 lines
+        let firstline = a:firstline + 3
+        let lastline  = a:lastline + 3
+        " Get the current line number
+        let curline = getpos('.')[1]
+        " Move the selected text inside the new method body
+        exec ":" . firstline . "," . lastline . "m " . (curline-2)
+endfunction
+vnoremap Qm :call RefactorExtractMethod()<cr>
+vnoremap QM :call RefactorExtractMethod()<cr>
 
 " }}}1
 " Plugin Configuration {{{1
