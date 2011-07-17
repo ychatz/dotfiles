@@ -46,7 +46,11 @@ if has("gui_running")
     " Maximize (lolmac)
     set lines=55
 else
+    if &term == "xterm-256color"
+    let &t_Co=256
+else
     let &t_Co=16
+endif
     color yannis
 
     " Enable the mouse
