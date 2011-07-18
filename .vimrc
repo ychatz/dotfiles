@@ -63,6 +63,9 @@ set laststatus=2
 set report=0
 set showcmd
 
+" Zsh-like command line completion
+set wildmenu
+
 set autoindent
 set nowrap
 
