@@ -6,6 +6,7 @@
 [alias]
     amend = commit --amend
     co = checkout
+    br = branch
     c = commit
     p = push
     di = diff
