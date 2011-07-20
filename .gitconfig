@@ -16,3 +16,5 @@
     tool = vimdiff
 [color "branch"]
     current = yellow reverse
+[core]
+	pager = less
