@@ -11,6 +11,7 @@
     di = diff
     pl = pull
     last = log -1 HEAD
+    l = log --graph --abbrev-commit --date=relative --format='%C(magenta)%h%Creset -%C(red)%d%Creset %s %C(green)(%ar) %C(bold blue)<%an>%Creset'
 [merge]
     tool = vimdiff
 [color "branch"]
