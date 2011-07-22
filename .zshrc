@@ -110,6 +110,12 @@ alias t='touch'
 alias mv='nocorrect mv -i'
 alias mkdir='nocorrect mkdir'
 
+rt() {
+    while [ ! -d ".git" ]; do
+        cd ..
+    done 
+}
+
 # misc
 alias duh='du -csh'
 alias top='top -o cpu'
