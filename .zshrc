@@ -1,5 +1,6 @@
 # General {{{
 #---------------------------------------------------------------------------------
+
 # Set history
 HISTSIZE=100000
 HISTFILE="$HOME/.history"
@@ -26,17 +27,19 @@ export CATALINA_HOME=/usr/local/tomcat
 #Custom commands inside
 export PATH="$PATH:$HOME/dotfiles/bin"
 
-autoload -U compinit
-compinit -C
-zstyle ':completion:*' menu select
-
 # Wise message of the day (see /dotfiles/bin/randomcow)
 randomcow
+# }}}
+# Auto completion {{{
+#---------------------------------------------------------------------------------
 
-# Tetris
-autoload -U tetris
-zle -N tetris
-bindkey "^t" tetris
+autoload -U compinit
+compinit -C
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*:*:*:*:*' menu select
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+zstyle ':completion:*:*:*:*:processes' command "ps -u `whoami` -o pid,user,comm -w -w"
 # }}}
 # Key bindings {{{
 #---------------------------------------------------------------------------------
@@ -44,6 +47,7 @@ bindkey "^t" tetris
 # Ctrl-f      Insert sudo prefix
 # Esc-e       Edit the current line in editor
 # Ctrl-x f    Insert files
+# Ctrl-t      Tetris
 #
 #---------------------------------------------------------------------------------
 
@@ -73,6 +77,11 @@ bindkey -M vicmd v edit-command-line
 autoload -U insert-files
 zle -N insert-files
 bindkey "^Xf" insert-files
+
+# Tetris
+autoload -U tetris
+zle -N tetris
+bindkey "^t" tetris
 # }}}
 # Prompt {{{
 #---------------------------------------------------------------------------------
