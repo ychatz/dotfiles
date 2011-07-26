@@ -32,6 +32,11 @@ zstyle ':completion:*' menu select
 
 # Wise message of the day (see /dotfiles/bin/randomcow)
 randomcow
+
+# Tetris
+autoload -U tetris
+zle -N tetris
+bindkey "^t" tetris
 # }}}
 # Key bindings {{{
 #---------------------------------------------------------------------------------
