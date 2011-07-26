@@ -1,3 +1,5 @@
+# General {{{
+#---------------------------------------------------------------------------------
 # Set history
 HISTSIZE=100000
 HISTFILE="$HOME/.history"
@@ -30,16 +32,15 @@ zstyle ':completion:*' menu select
 
 # Wise message of the day (see /dotfiles/bin/randomcow)
 randomcow
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-# KEY BINDINGS
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# }}}
+# Key bindings {{{
+#---------------------------------------------------------------------------------
 #
 # Ctrl-f      Insert sudo prefix
 # Esc-e       Edit the current line in editor
 # Ctrl-x f    Insert files
 #
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+#---------------------------------------------------------------------------------
 
 insert-root-prefix () {
    local prefix
@@ -67,10 +68,9 @@ bindkey -M vicmd v edit-command-line
 autoload -U insert-files
 zle -N insert-files
 bindkey "^Xf" insert-files
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-# PROMPT
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# }}}
+# Prompt {{{
+#---------------------------------------------------------------------------------
 
 # Get the name of the branch we are on
 git_prompt_info() {
@@ -81,11 +81,9 @@ autoload -U colors
 colors
 setopt prompt_subst
 PROMPT='%{$fg[yellow]%}%c%{$fg[green]%}$(git_prompt_info)%{$fg[yellow]%} ⇢  %{$reset_color%}'
-
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-# ALIASES
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# }}}
+# Aliases# {{{
+#---------------------------------------------------------------------------------
 
 # git
 g() {
@@ -130,3 +128,4 @@ alias egrep='egrep --colour'
 alias h="man"
 alias so="source ~/.zshrc"
 alias :q="toilet -f bigmono12 -F gay FACEPALM"
+# }}}
