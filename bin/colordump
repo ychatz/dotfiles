@@ -1,0 +1,10 @@
+#!/bin/zsh
+# Usage: colordump
+# Dump 256 ansi colors to the terminal.
+
+printf "How each ANSI color is displayed on your terminal:\n\n"
+
+for i in {0..255}; do
+    echo -e "\e[48;05;${i}m    ${i}    \e[m";
+done
+
