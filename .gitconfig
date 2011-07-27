@@ -5,14 +5,15 @@
     ui = auto
 [alias]
     amend = commit --amend
-    co = checkout
     br = branch
     c = commit
-    p = push
+    co = checkout
     di = diff
-    pl = pull
-    last = log -1 HEAD
     l = log --graph --abbrev-commit --date=relative --format='%C(magenta)%h%Creset -%C(red)%d%Creset %s %C(green)(%ar) %C(bold blue)<%an>%Creset'
+    last = log -1 HEAD
+    p = push
+    pl = pull
+    x = checkout HEAD
 [merge]
     tool = vimdiff
 [color "branch"]
