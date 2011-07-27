@@ -1,4 +1,4 @@
-"General {{{1
+"General {{{
 "---------------------------------------------------------------------------------
 call pathogen#runtime_append_all_bundles()
 silent! call pathogen#helptags()
@@ -20,8 +20,6 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
-
-autocmd FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
 " Encoding
 if exists("+encoding")
@@ -106,8 +104,14 @@ endfunction
 inoremap <Tab> <C-R>=InsertTabWrapper()<CR>
 inoremap <S-Tab> <C-P>
 
-" }}}1
-" Ruby refactoring {{{1
+" }}}
+" File Types {{{
+"---------------------------------------------------------------------------------
+
+autocmd Filetype gitcommit set textwidth=68 spell
+autocmd Filetype ruby      set textwidth=86 tabstop=2
+" }}}
+" Ruby refactoring {{{
 "---------------------------------------------------------------------------------
 " Who uses ex-mode anyway?
 "
@@ -159,8 +163,8 @@ endfunction
 vnoremap Qm :call RefactorExtractMethod()<cr>
 vnoremap QM :call RefactorExtractMethod()<cr>
 
-" }}}1
-" Plugin Configuration {{{1
+" }}}
+" Plugin Configuration {{{
 "---------------------------------------------------------------------------------
 
 " Define Rroutes, RVroutes etc.
@@ -175,7 +179,7 @@ let g:CommandTAcceptSelectionSplitMap = '<C-w>'
 " No more than 5 lines
 let g:CommandTMaxHeight = 5
 
-" }}}1
+" }}}
 " Leader key mappings {{{1
 "---------------------------------------------------------------------------------
 " <space>rb : Open ruby documentation for the word under cursor
@@ -268,4 +272,4 @@ map <leader>oc :CommandTFlush<cr>\|:CommandT app/controllers<cr>
 map <leader>om :CommandTFlush<cr>\|:CommandT app/models<cr>
 map <leader>os :CommandTFlush<cr>\|:CommandT spec<cr>
 map <leader>ol :CommandTFlush<cr>\|:CommandT lib<cr>
-" }}}1
+" }}}
