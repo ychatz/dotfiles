@@ -90,6 +90,9 @@ nnoremap <C-J> <C-W>j
 nnoremap <C-K> <C-W>k
 nnoremap <C-L> <C-W>l
 
+" Not interested
+nnoremap K <nop>
+
 " Remap the tab key to do autocompletion or indentation depending on the
 " context (from http://www.vim.org/tips/tip.php?tip_id=102)
 function! InsertTabWrapper()
