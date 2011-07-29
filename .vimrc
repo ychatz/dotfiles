@@ -61,6 +61,9 @@ set laststatus=2
 set report=0
 set showcmd
 
+" Don't jump to the start of line with CTRL+U / CTRL+D
+set nostartofline
+
 " Zsh-like command line completion
 set wildmenu
 
