@@ -26,9 +26,6 @@ export CATALINA_HOME=/usr/local/tomcat
 
 #Custom commands inside
 export PATH="$PATH:$HOME/dotfiles/bin"
-
-# Wise message of the day (see /dotfiles/bin/randomcow)
-randomcow
 # }}}
 # Auto completion {{{
 #---------------------------------------------------------------------------------
