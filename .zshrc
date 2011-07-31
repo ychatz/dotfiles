@@ -5,6 +5,8 @@
 HISTSIZE=100000
 HISTFILE="$HOME/.history"
 SAVEHIST=$HISTSIZE
+setopt inc_append_history
+setopt share_history
 
 # Set default pager
 export PAGER=most
