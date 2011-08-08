@@ -95,10 +95,10 @@ colors
 setopt prompt_subst
 PROMPT='%{$fg[yellow]%}%c%{$fg[green]%}$(git_prompt_info)%{$fg[yellow]%} ⇢  %{$reset_color%}'
 # }}}
-# Aliases# {{{
+# Custom commands {{{
 #---------------------------------------------------------------------------------
 
-# git
+# git shortcut
 g() {
     if [[ $# == 0 ]]; then
         git status
@@ -106,6 +106,25 @@ g() {
         git $*
     fi
 }
+
+# navigates back to the root folder of the current project
+rt() {
+    while [ ! -d ".git" ]; do
+        cd ..
+    done 
+}
+
+# a shortcut for my projects directory that supports auto-completion
+#from https://github.com/holman/dotfiles
+c() { 
+    cd ~/work/$*
+}
+
+compdef '_files -W ~/work -/' c
+
+# }}}
+# Aliases {{{
+#---------------------------------------------------------------------------------
 
 # rails
 alias r='rails'
@@ -118,18 +137,6 @@ alias ...='cd ../..'
 alias t='touch'
 alias mv='nocorrect mv -i'
 alias mkdir='nocorrect mkdir'
-
-rt() {
-    while [ ! -d ".git" ]; do
-        cd ..
-    done 
-}
-
-c() { #from https://github.com/holman/dotfiles
-    cd ~/work/$*
-}
-
-compdef '_files -W ~/work -/' c
 
 # misc
 alias duh='du -csh'
