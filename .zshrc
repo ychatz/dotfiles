@@ -106,8 +106,6 @@ g() {
         git $*
     fi
 }
-alias gco='git checkout'
-alias gc='git commit -am'
 
 # rails
 alias r='rails'
