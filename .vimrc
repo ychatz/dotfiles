@@ -112,7 +112,7 @@ inoremap <S-Tab> <C-P>
 "---------------------------------------------------------------------------------
 
 autocmd Filetype gitcommit set textwidth=68 spell
-autocmd Filetype ruby      set textwidth=86 tabstop=2
+autocmd Filetype ruby      set textwidth=86 tabstop=2 softtabstop=2 shiftwidth=2
 " }}}
 " Ruby refactoring {{{
 "---------------------------------------------------------------------------------
