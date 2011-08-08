@@ -125,13 +125,18 @@ rt() {
     done 
 }
 
+c() { #from https://github.com/holman/dotfiles
+    cd ~/work/$*
+}
+
+compdef '_files -W ~/work -/' c
+
 # misc
 alias duh='du -csh'
 alias top='top -o cpu'
 alias df='df -h'
 alias jobs='jobs -p'
 alias cpu="ps ux | awk 'NR > 1 {res += \$3} END { print \"Total %CPU:\",res }'"
-alias c='clear'
 alias grep='grep --colour'
 alias egrep='egrep --colour'
 
