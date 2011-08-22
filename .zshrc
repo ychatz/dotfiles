@@ -146,6 +146,7 @@ alias jobs='jobs -p'
 alias cpu="ps ux | awk 'NR > 1 {res += \$3} END { print \"Total %CPU:\",res }'"
 alias grep='grep --colour'
 alias egrep='egrep --colour'
+alias calc='noglob calc'
 
 # fucking vim
 alias h="man"

@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+# Usage: calc <expression>
+# Evaluates the expression which is passed as an argument
+
+puts eval(ARGV.join)
