@@ -5,15 +5,18 @@ silent! call pathogen#helptags()
 
 filetype plugin indent on
 
-set nocompatible "just in case
+set nocompatible " Just in case
 set backspace=indent,eol,start
 
 syntax on
 set number
+set relativenumber " Experimental
 set ruler
 
 set scrolloff=3
 set scroll=15
+
+set ttimeoutlen=50 " Make Esc work faster
 
 " Identation
 set tabstop=4
@@ -26,7 +29,7 @@ if exists("+encoding")
     set encoding=utf-8
 endif
 
-"Folding
+" Folding
 set foldmethod=marker
 
 " Appearance
@@ -45,10 +48,11 @@ if has("gui_running")
     set lines=55
 else
     if &term == "xterm-256color"
-    let &t_Co=256
-else
-    let &t_Co=16
-endif
+        let &t_Co=256
+    else
+        let &t_Co=16
+    endif
+
     color yannis
 
     " Enable the mouse
@@ -183,7 +187,7 @@ let g:CommandTAcceptSelectionSplitMap = '<C-w>'
 let g:CommandTMaxHeight = 5
 
 " }}}
-" Leader key mappings {{{1
+" Leader key mappings {{{
 "---------------------------------------------------------------------------------
 " <space>rb : Open ruby documentation for the word under cursor
 " <space>rr : Open rails documentation for the word under cursor
@@ -194,7 +198,7 @@ let g:CommandTMaxHeight = 5
 " <space>h  : Show syntax highlighting group (useful when editing the
 "             colorscheme)
 "
-" <space>s  : Remove trailing whitespaces and empty lines at the EOF
+" <space>s  : Remove trailing whitespaces and empty lines from the EOF
 "
 " <space>cc : Save, compile and run (if the compilation was successful) C file.
 " <space>cp : Save, compile and run (if the compilation was successful) C++ file.
