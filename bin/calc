@@ -2,4 +2,14 @@
 # Usage: calc <expression>
 # Evaluates the expression which is passed as an argument
 
+include Math
+
+def fact(value)
+  value == 0 ? 1 : value * fact(value-1)
+end
+
+def log_2(value)
+  log(value) / log(2)
+end
+
 puts eval(ARGV.join)

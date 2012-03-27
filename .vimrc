@@ -18,7 +18,7 @@ set scroll=15
 
 set ttimeoutlen=50 " Make Esc work faster
 
-" Identation
+" Indentation
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -40,9 +40,9 @@ if has("gui_running")
     set guioptions -=r
 
     " Set color scheme and font
-    color solarized
+    color yannis
     set background=light
-    set guifont=Monaco:h12
+    set guifont=Monaco:h13
 
     " Maximize (lolmac)
     set lines=55
@@ -53,7 +53,7 @@ else
         let &t_Co=16
     endif
 
-    color yannis
+    color bubblegum
 
     " Enable the mouse
     set mouse=a
@@ -77,17 +77,14 @@ set nowrap
 " Search
 set ignorecase smartcase
 set incsearch
-set nohlsearch
+set hlsearch
 
 set directory=/tmp
-
-command! -bar -nargs=0 SudoW   :setl nomod|silent exe 'write !sudo tee % >/dev/null'|let &mod = v:shell_error
-command! -bar -nargs=* -bang W :write<bang> <args>
-command! -bar -nargs=* -bang Q :quit<bang> <args>
 
 " Terminal-consistent shortcut keys for command line
 cnoremap <C-A> <Home>
 cnoremap <C-K> <C-\>estrpart(getcmdline(), 0, getcmdpos() - 1)<CR>
+cnoremap <C-O> <CR>
 
 " Window navigation
 nnoremap <C-H> <C-W>h
@@ -95,8 +92,9 @@ nnoremap <C-J> <C-W>j
 nnoremap <C-K> <C-W>k
 nnoremap <C-L> <C-W>l
 
-" Not interested
-nnoremap K <nop>
+" Fix motions for wrapped lines
+nnoremap j gj
+nnoremap k gk
 
 " Remap the tab key to do autocompletion or indentation depending on the
 " context (from http://www.vim.org/tips/tip.php?tip_id=102)
@@ -115,8 +113,11 @@ inoremap <S-Tab> <C-P>
 " File Types {{{
 "---------------------------------------------------------------------------------
 
-autocmd Filetype gitcommit set textwidth=68 spell
-autocmd Filetype ruby      set textwidth=86 tabstop=2 softtabstop=2 shiftwidth=2
+autocmd Filetype gitcommit set expandtab textwidth=68 spell
+autocmd Filetype ruby      set expandtab textwidth=80 tabstop=2 softtabstop=2 shiftwidth=2 formatoptions+=c
+autocmd FileType vim       set expandtab shiftwidth=2 softtabstop=2 keywordprg=:help
+autocmd FileType c         set makeprg=gcc\ -O2
+autocmd FileType cpp       set makeprg=g++
 " }}}
 " Ruby refactoring {{{
 "---------------------------------------------------------------------------------
@@ -147,7 +148,7 @@ function! RefactorInlineVariable()
     exec ':.s:\<' . @v . '\>:' . @c . ':gI'
 endfunction
 map Qi :silent :call RefactorInlineVariable()<cr>
-map Qi :silent :call RefactorInlineVariable()<cr>
+map QI :silent :call RefactorInlineVariable()<cr>
 
 function! RefactorExtractMethod() range
         let method_name = input('(Extract method) New method name: ')
@@ -200,8 +201,7 @@ let g:CommandTMaxHeight = 5
 "
 " <space>s  : Remove trailing whitespaces and empty lines from the EOF
 "
-" <space>cc : Save, compile and run (if the compilation was successful) C file.
-" <space>cp : Save, compile and run (if the compilation was successful) C++ file.
+" <space>c : Save, compile and run (if the compilation was successful)
 "
 " <space>f  : Open Command-T
 " <space>om : Open Command-T with the directory set to models
@@ -209,6 +209,8 @@ let g:CommandTMaxHeight = 5
 " <space>ov : Open Command-T with the directory set to views
 " <space>os : Open Command-T with the directory set to spec
 " <space>ol : Open Command-T with the directory set to lib
+"
+" <space><space> : Edit the alternate file
 "---------------------------------------------------------------------------------
 
 " Set mapleader (to <space>) for custom commands
@@ -269,8 +271,16 @@ map <leader>s :call StripWhitespace ()<cr>
 map <leader>v :e $MYVIMRC<cr>
 
 " Save, compile and run files
-map <leader>cc :w<cr>:!gcc % && ./a.out<cr>
-map <leader>cp :w<cr>:!g++ % && ./a.out<cr>
+function! CompileAndRun()
+  write
+  silent! make %
+  redraw!
+  cwindow
+  if len(getqflist()) == 0
+    exec '!time ./a.out'
+  endif
+endfunction
+map <leader>c :call CompileAndRun()<cr>
 
 " Command-T shortcuts
 map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
@@ -279,4 +289,48 @@ map <leader>oc :CommandTFlush<cr>\|:CommandT app/controllers<cr>
 map <leader>om :CommandTFlush<cr>\|:CommandT app/models<cr>
 map <leader>os :CommandTFlush<cr>\|:CommandT spec<cr>
 map <leader>ol :CommandTFlush<cr>\|:CommandT lib<cr>
+
+map <leader><leader> <C-^>
 " }}}
+" Custom command definitions {{{
+
+command! -bar -nargs=0 SudoW   :setl nomod|silent exe 'write !sudo tee % >/dev/null'|let &mod = v:shell_error
+command! -bar -nargs=* -bang W :write<bang> <args>
+command! -bar -nargs=* -bang Q :quit<bang> <args>
+
+" Clear the search pattern register
+command! C let @/=""
+
+" Align the first 'count' columns separated by one or more spaces
+function! AlignColumns(count) range
+  let lnum = 1
+  let str = ':'
+  while lnum <= a:count
+      let str = 'l' . str
+      let lnum = lnum + 1
+  endwhile
+  exec ":AlignCtrl " . str
+  " Create a random string
+  redir @s
+  ruby require 'digest/md5'; printf Digest::MD5.hexdigest(rand(50000).to_s)
+  redir END
+  let @s = strpart(@s, 1, strlen(@s) - 1)
+  " Replace spaces with it
+  silent exec ":" . a:firstline . "," . a:lastline . "s/\\s\\+/" . @s . "/g"
+  " Align columns separated by that string
+  exec ":" . a:firstline . "," . a:lastline . "Align " . @s
+  " Bring back the spaces
+  silent exec ":" . a:firstline . "," . a:lastline . "s/" . @s . "/ /g"
+  " Clear the search pattern register
+  exec ":C"
+endfunction
+
+command! -nargs=* -range Al <line1>,<line2>call AlignColumns(<args>)
+"}}}
+" Language maps {{{
+
+" Make commands work when keyboard sends greek characters
+if &encoding == "utf-8"
+  set langmap=ΑA,ΒB,ΨC,ΔD,ΕE,ΦF,ΓG,ΗH,ΙI,ΞJ,ΚK,ΛL,ΜM,ΝN,ΟO,ΠP,QQ,ΡR,ΣS,ΤT,ΘU,ΩV,WW,ΧX,ΥY,ΖZ,αa,βb,ψc,δd,εe,φf,γg,ηh,ιi,ξj,κk,λl,μm,νn,οo,πp,qq,ρr,σs,τt,θu,ωv,ςw,χx,υy,ζz
+endif
+"}}}
