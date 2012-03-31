@@ -23,6 +23,7 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
+set autoindent
 
 " Encoding
 if exists("+encoding")
@@ -61,8 +62,9 @@ endif
 
 " Always show a status line
 set laststatus=2
-
+" Always report the number of lines changed
 set report=0
+"Show partial command in the bottom-right corner
 set showcmd
 
 " Don't jump to the start of line with CTRL+U / CTRL+D
@@ -70,12 +72,12 @@ set nostartofline
 
 " Zsh-like command line completion
 set wildmenu
-
-set autoindent
+" Don't wrap text by default
 set nowrap
 
 " Search
-set ignorecase smartcase
+set ignorecase
+set smartcase
 set incsearch
 set hlsearch
 
@@ -190,55 +192,24 @@ let g:CommandTMaxHeight = 5
 " }}}
 " Leader key mappings {{{
 "---------------------------------------------------------------------------------
-" <space>rb : Open ruby documentation for the word under cursor
-" <space>rr : Open rails documentation for the word under cursor
-"
-" <space>n  : Rename current file
-" <space>v  : Open .vimrc
-"
-" <space>h  : Show syntax highlighting group (useful when editing the
-"             colorscheme)
-"
-" <space>s  : Remove trailing whitespaces and empty lines from the EOF
-"
-" <space>c : Save, compile and run (if the compilation was successful)
-"
-" <space>f  : Open Command-T
-" <space>om : Open Command-T with the directory set to models
-" <space>oc : Open Command-T with the directory set to controllers
-" <space>ov : Open Command-T with the directory set to views
-" <space>os : Open Command-T with the directory set to spec
-" <space>ol : Open Command-T with the directory set to lib
-"
-" <space><space> : Edit the alternate file
-"---------------------------------------------------------------------------------
 
 " Set mapleader (to <space>) for custom commands
 let mapleader = ' '
 
-" Open ruby and ruby on rails documentation
-" (from https://github.com/technicalpickles/pickled-vim/blob/master/home/.vimrc)
+"   n         : Rename current file
+"   v         : Open .vimrc
+"   h         : Show syntax highlighting group (useful when editing the scheme)
+"   s         : Remove trailing whitespaces and empty lines from the EOF
+"   c         : Save, compile and run (if the compilation was successful)
+"   f         : Open Command-T
+"   om        : Open Command-T with the directory set to models
+"   oc        : Open Command-T with the directory set to controllers
+"   ov        : Open Command-T with the directory set to views
+"   os        : Open Command-T with the directory set to spec
+"   ol        : Open Command-T with the directory set to lib
+"   <space>   : Edit the alternate file
+"---------------------------------------------------------------------------------
 
-let g:browser = 'open '
-
-" Open the Rails ApiDock page for the word under cursor, using the 'open'
-" command
-function! OpenRailsDoc(keyword)
-    let url = 'http://apidock.com/rails/'.a:keyword
-    exec '!'.g:browser.' '.url
-endfunction
-
-" Open the Ruby ApiDock page for the word under cursor, using the 'open'
-" command
-function! OpenRubyDoc(keyword)
-    let url = 'http://apidock.com/ruby/'.a:keyword
-    exec '!'.g:browser.' '.url
-endfunction
-
-noremap <leader>rb :call OpenRubyDoc(expand('<cword>'))<cr>
-noremap <leader>rr :call OpenRailsDoc(expand('<cword>'))<cr>
-
-" Command to rename current file
 function! RenameFile()
     let old_name = expand('%')
     let new_name = input('New file name: ', expand('%'))
@@ -293,12 +264,13 @@ map <leader>ol :CommandTFlush<cr>\|:CommandT lib<cr>
 map <leader><leader> <C-^>
 " }}}
 " Custom command definitions {{{
+"---------------------------------------------------------------------------------
 
 command! -bar -nargs=0 SudoW   :setl nomod|silent exe 'write !sudo tee % >/dev/null'|let &mod = v:shell_error
 command! -bar -nargs=* -bang W :write<bang> <args>
 command! -bar -nargs=* -bang Q :quit<bang> <args>
 
-" Clear the search pattern register
+" Turn off syntax highlighting
 command! C let @/=""
 
 " Align the first 'count' columns separated by one or more spaces
@@ -328,9 +300,10 @@ endfunction
 command! -nargs=* -range Al <line1>,<line2>call AlignColumns(<args>)
 "}}}
 " Language maps {{{
+"---------------------------------------------------------------------------------
 
 " Make commands work when keyboard sends greek characters
 if &encoding == "utf-8"
-  set langmap=ΑA,ΒB,ΨC,ΔD,ΕE,ΦF,ΓG,ΗH,ΙI,ΞJ,ΚK,ΛL,ΜM,ΝN,ΟO,ΠP,QQ,ΡR,ΣS,ΤT,ΘU,ΩV,WW,ΧX,ΥY,ΖZ,αa,βb,ψc,δd,εe,φf,γg,ηh,ιi,ξj,κk,λl,μm,νn,οo,πp,qq,ρr,σs,τt,θu,ωv,ςw,χx,υy,ζz
+  set langmap=ΑA,ΒB,ΨC,ΔD,ΕE,ΦF,ΓG,ΗH,ΙI,ΞJ,ΚK,ΛL,ΜM,ΝN,ΟO,ΠP,QQ,ΡR,ΣS,ΤT,ΘU,ΩV,WW,ΧX,ΥY,ΖZ,αa,βb,ψc,δd,εe,φf,γg,ηh,ιi,ξj,κk,λl,μm,νn,οo,πp,qq,ρr,σs,τt,θu,ωv,ςw,χx,υy,ζz,¨:
 endif
 "}}}
