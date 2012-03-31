@@ -27,37 +27,37 @@ set autoindent
 
 " Encoding
 if exists("+encoding")
-    set encoding=utf-8
+  set encoding=utf-8
 endif
 
 " Folding
 set foldmethod=marker
 
-" Appearance
+" Interface
 if has("gui_running")
-    " Scrollbars and toolbars are so 2011. Remove them!
-    set guioptions -=T
-    set guioptions -=L
-    set guioptions -=r
+  " Scrollbars and toolbars are so 2011. Remove them!
+  set guioptions -=T
+  set guioptions -=L
+  set guioptions -=r
 
-    " Set color scheme and font
-    color yannis
-    set background=light
-    set guifont=Monaco:h13
+  " Set color scheme and font
+  color yannis
+  set background=light
+  set guifont=Monaco:h13
 
-    " Maximize (lolmac)
-    set lines=55
+  " Maximize (lolmac)
+  set lines=55
 else
-    if &term == "xterm-256color"
-        let &t_Co=256
-    else
-        let &t_Co=16
-    endif
+  if &term == "xterm-256color"
+    let &t_Co=256
+  else
+    let &t_Co=16
+  endif
 
-    color bubblegum
+  color bubblegum
 
-    " Enable the mouse
-    set mouse=a
+  " Enable the mouse
+  set mouse=a
 endif
 
 " Always show a status line
@@ -83,6 +83,8 @@ set hlsearch
 
 set directory=/tmp
 
+set list listchars=trail:·
+
 " Terminal-consistent shortcut keys for command line
 cnoremap <C-A> <Home>
 cnoremap <C-K> <C-\>estrpart(getcmdline(), 0, getcmdpos() - 1)<CR>
@@ -101,12 +103,12 @@ nnoremap k gk
 " Remap the tab key to do autocompletion or indentation depending on the
 " context (from http://www.vim.org/tips/tip.php?tip_id=102)
 function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-n>"
-    endif
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] !~ '\k'
+    return "\<tab>"
+  else
+    return "\<c-n>"
+  endif
 endfunction
 inoremap <Tab> <C-R>=InsertTabWrapper()<CR>
 inoremap <S-Tab> <C-P>
@@ -130,45 +132,45 @@ autocmd FileType cpp       set makeprg=g++
 "---------------------------------------------------------------------------------
 
 function! RefactorInlineVariable()
-    " Go to the beginning of the line
-    normal _
-    " Find the next occurence of variable
-    normal *
-    " Go back
-    normal ''
-    " Copy the variable name into register v
-    normal "vde
-    " Delete the = and the two spaces
-    normal 3x
-    " Copy the variable expression into register y
-    normal "cD
-    " Delete the rest of the line
-    normal dd
-    " Go back again to the next occurence
-    normal ''
-    " Replace all of the variable's occurences in this line
-    exec ':.s:\<' . @v . '\>:' . @c . ':gI'
+  " Go to the beginning of the line
+  normal _
+  " Find the next occurence of variable
+  normal *
+  " Go back
+  normal ''
+  " Copy the variable name into register v
+  normal "vde
+  " Delete the = and the two spaces
+  normal 3x
+  " Copy the variable expression into register y
+  normal "cD
+  " Delete the rest of the line
+  normal dd
+  " Go back again to the next occurence
+  normal ''
+  " Replace all of the variable's occurences in this line
+  exec ':.s:\<' . @v . '\>:' . @c . ':gI'
 endfunction
 map Qi :silent :call RefactorInlineVariable()<cr>
 map QI :silent :call RefactorInlineVariable()<cr>
 
 function! RefactorExtractMethod() range
-        let method_name = input('(Extract method) New method name: ')
-        " Go to the last selected line
-        exec "normal! " . a:lastline . "G"
-        " Write the call to the new method below it
-        exec "normal! o" . method_name
-        " Go to the beginning of the current method
-        normal [m
-        " Insert the body of the new method above it
-        exec "normal! Odef " . method_name . "\<cr>end\<cr>"
-        " The body is 3 lines long, so everything moved down by 3 lines
-        let firstline = a:firstline + 3
-        let lastline  = a:lastline + 3
-        " Get the current line number
-        let curline = getpos('.')[1]
-        " Move the selected text inside the new method body
-        exec ":" . firstline . "," . lastline . "m " . (curline-2)
+  let method_name = input('(Extract method) New method name: ')
+  " Go to the last selected line
+  exec "normal! " . a:lastline . "G"
+  " Write the call to the new method below it
+  exec "normal! o" . method_name
+  " Go to the beginning of the current method
+  normal [m
+  " Insert the body of the new method above it
+  exec "normal! Odef " . method_name . "\<cr>end\<cr>"
+  " The body is 3 lines long, so everything moved down by 3 lines
+  let firstline = a:firstline + 3
+  let lastline  = a:lastline + 3
+  " Get the current line number
+  let curline = getpos('.')[1]
+  " Move the selected text inside the new method body
+  exec ":" . firstline . "," . lastline . "m " . (curline-2)
 endfunction
 vnoremap Qm :call RefactorExtractMethod()<cr>
 vnoremap QM :call RefactorExtractMethod()<cr>
@@ -211,13 +213,13 @@ let mapleader = ' '
 "---------------------------------------------------------------------------------
 
 function! RenameFile()
-    let old_name = expand('%')
-    let new_name = input('New file name: ', expand('%'))
-    if new_name != '' && new_name != old_name
-        exec ':saveas ' . new_name
-        exec ':silent !rm ' . old_name
-        redraw!
-    endif
+  let old_name = expand('%')
+  let new_name = input('New file name: ', expand('%'))
+  if new_name != '' && new_name != old_name
+    exec ':saveas ' . new_name
+    exec ':silent !rm ' . old_name
+    redraw!
+  endif
 endfunction
 map <leader>n :call RenameFile()<cr>
 
@@ -227,14 +229,14 @@ map <leader>h :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> t
 
 " Clean up file
 function! StripWhitespace ()
-    " Remove trailing whitespaces
-    exec ':%s/ *$/'
-    " Remove empty lines at the EOF
-    normal G
-    while getline('.') == ''
-        normal dd
-    endwhile
-    normal ``
+  " Remove trailing whitespaces
+  exec ':%s/ *$/'
+  " Remove empty lines at the EOF
+  normal G
+  while getline('.') == ''
+    normal dd
+  endwhile
+  normal ``
 endfunction
 map <leader>s :call StripWhitespace ()<cr>
 
@@ -278,8 +280,8 @@ function! AlignColumns(count) range
   let lnum = 1
   let str = ':'
   while lnum <= a:count
-      let str = 'l' . str
-      let lnum = lnum + 1
+    let str = 'l' . str
+    let lnum = lnum + 1
   endwhile
   exec ":AlignCtrl " . str
   " Create a random string
