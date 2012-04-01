@@ -43,10 +43,14 @@ zstyle ':completion:*:*:*:*:processes' command "ps -u `whoami` -o pid,user,comm 
 # Key bindings {{{
 #---------------------------------------------------------------------------------
 #
-# Ctrl-f      Insert sudo prefix
+# Ctrl-n      Insert sudo prefix
 # Esc-e       Edit the current line in editor
 # Ctrl-x f    Insert files
 # Ctrl-t      Tetris
+#
+# Ctrl-b      Go back one word
+# Ctrl-f      Go forward one word
+# Ctrl-w      Delete the previous word
 #
 #---------------------------------------------------------------------------------
 
@@ -65,7 +69,7 @@ insert-root-prefix () {
 }
 
 zle -N insert-root-prefix
-bindkey "^F" insert-root-prefix
+bindkey "^N" insert-root-prefix
 
 autoload -U edit-command-line
 zle -N edit-command-line
@@ -76,6 +80,10 @@ bindkey -M vicmd v edit-command-line
 autoload -U insert-files
 zle -N insert-files
 bindkey "^Xf" insert-files
+
+bindkey "^W" backward-kill-word
+bindkey "^B" backward-word
+bindkey "^F" forward-word
 
 # Tetris
 autoload -U tetris
