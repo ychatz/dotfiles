@@ -1,0 +1,8 @@
+#!/bin/zsh
+# Usage: gitmon [<date> <year>]
+#
+# Shows up the calendar for the specific month and highlights the days
+# on which at least one commit was done in the active repository.
+
+CMTDATES=`git log --date=short --pretty=format:%ad --after=${2}-${1}-01 | uniq | awk -F\- -v mon="${1}" '$2 == mon {print $3}' | sort | xargs`;
+cal $1 $2 | gawk -F "[ ]" -v commits="$CMTDATES" 'BEGIN { split(commits, x, " "); s = 1 } { for (i=1; i<=NF; i++) { if ( $i == x[s] ) { $i = "\033[1;31m" $i "\033[0m"; ++s; } }; print }'
