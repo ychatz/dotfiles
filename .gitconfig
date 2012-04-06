@@ -14,6 +14,7 @@
     p = push
     pl = pull
     x = checkout HEAD
+    up-sub = submodule foreach git pull
 [merge]
     tool = vimdiff
 [color "branch"]
