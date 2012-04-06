@@ -69,7 +69,7 @@ insert-root-prefix () {
 }
 
 zle -N insert-root-prefix
-bindkey "^N" insert-root-prefix
+bindkey "^J" insert-root-prefix
 
 autoload -U edit-command-line
 zle -N edit-command-line
