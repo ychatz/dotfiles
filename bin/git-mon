@@ -1,0 +1,35 @@
+#!/bin/sh
+# Usage: gitmon [<month> <year>]
+#
+# Shows up the given month in calendar and highlights the days on which
+# there was at least one commit in the active repository. If no arguments
+# are specified, the current month is displayed.
+
+set -e
+
+if [ $# -eq 0 ]
+then
+    set -- `date +"%m %Y"`
+fi
+
+CMTDATES=`git log --date=short --pretty=format:%ad --after=${2}-${1}-01 |
+            uniq |
+            awk -F\- -v mon="${1}" '$2 == mon {print $3}' |
+            sort |
+            xargs`;
+
+cal $1 $2 |
+    awk -F "[ ]" -v commits="$CMTDATES" '
+        BEGIN {
+            split(commits, x, " ");
+            s = 1;
+        }
+        {
+            for (i=1; i<=NF; i++) {
+                if ( $i == x[s] ) {
+                    $i = "\033[1;31m" $i "\033[0m";
+                    ++s;
+                }
+            };
+            print
+        }'
