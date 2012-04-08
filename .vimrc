@@ -206,6 +206,7 @@ let mapleader = ' '
 "   n         : Rename current file
 "   v         : Open .vimrc
 "   h         : Show syntax highlighting group (useful when editing the scheme)
+"   H         : Open a vertical window and edit the current colorscheme
 "   s         : Remove trailing whitespaces and empty lines from the EOF
 "   c         : Save, compile and run (if the compilation was successful)
 "   f         : Open Command-T
@@ -231,6 +232,8 @@ map <leader>n :call RenameFile()<cr>
 map <leader>h :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
             \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
             \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>
+
+map<leader>H :exec "vsplit ~/.vim/colors/" . g:colors_name . ".vim"<cr>
 
 " Clean up file
 function! StripWhitespace ()
@@ -278,7 +281,7 @@ command! -bar -nargs=* -bang W :write<bang> <args>
 command! -bar -nargs=* -bang Q :quit<bang> <args>
 
 " Turn off syntax highlighting
-command! C let @/=""
+command! C nohlsearch
 
 " Align the first 'count' columns separated by one or more spaces
 function! AlignColumns(count) range
