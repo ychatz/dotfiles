@@ -54,7 +54,7 @@ else
     let &t_Co=16
   endif
 
-  color bubblegum
+  color molokai
 
   " Enable the mouse
   set mouse=a
