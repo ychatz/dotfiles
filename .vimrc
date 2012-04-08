@@ -60,6 +60,8 @@ else
   set mouse=a
 endif
 
+" Highlight the screen line of the cursor
+set cursorline
 " Always show a status line
 set laststatus=2
 " Always report the number of lines changed
@@ -122,6 +124,9 @@ autocmd Filetype ruby      set expandtab textwidth=80 tabstop=2 softtabstop=2 sh
 autocmd FileType vim       set expandtab shiftwidth=2 softtabstop=2 keywordprg=:help
 autocmd FileType c         set makeprg=gcc\ -O2
 autocmd FileType cpp       set makeprg=g++
+
+" Don't highlight the cursor line on the quickfix window
+autocmd BufReadPost quickfix  setlocal nocursorline
 " }}}
 " Ruby refactoring {{{
 "---------------------------------------------------------------------------------
