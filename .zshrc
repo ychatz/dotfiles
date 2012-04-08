@@ -101,7 +101,7 @@ git_prompt_info() {
 autoload -U colors
 colors
 setopt prompt_subst
-PROMPT='%{$fg[yellow]%}%c%{$fg[green]%}$(git_prompt_info)%{$fg[yellow]%} ⇢  %{$reset_color%}'
+PROMPT='%{$fg[magenta]%}%c%{$fg[green]%}$(git_prompt_info)%{$fg[magenta]%} ⇢  %{$reset_color%}'
 # }}}
 # Custom commands {{{
 #---------------------------------------------------------------------------------
