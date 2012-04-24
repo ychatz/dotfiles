@@ -35,7 +35,7 @@ set foldmethod=marker
 
 " Interface
 if has("gui_running")
-  " Scrollbars and toolbars are so 2011. Remove them!
+  " Scrollbars and toolbars are so 2012. Remove them!
   set guioptions -=T
   set guioptions -=L
   set guioptions -=r
