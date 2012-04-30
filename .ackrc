@@ -1,0 +1,7 @@
+--type-add=ruby=haml
+--type-add=vim=vimrc
+--type-set=markdown=md,mkdn,mdown,markdown
+
+--color-filename=bold red
+--color-lineno=blue
+--sort-files
