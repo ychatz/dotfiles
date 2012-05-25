@@ -8,6 +8,8 @@ SAVEHIST=$HISTSIZE
 setopt inc_append_history
 setopt share_history
 
+unsetopt nomatch
+
 # Set default pager
 export PAGER=most
 
