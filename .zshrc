@@ -130,6 +130,28 @@ c() {
 
 compdef '_files -W ~/work -/' c
 
+
+a() {
+    cd ~/algo/$*
+}
+
+compdef '_files -W ~/algo -/' a
+
+cdl() {
+    cd $*;
+    l
+}
+
+dotf() {
+    if [[ $# == 0 ]]; then
+        cd ~/dotfiles
+    else
+        vi ~/dotfiles/$*
+    fi
+}
+
+compdef '_files -W ~/dotfiles -/' dotf
+
 # }}}
 # Aliases {{{
 #---------------------------------------------------------------------------------
