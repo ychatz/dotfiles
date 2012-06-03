@@ -345,32 +345,6 @@ command! -bar -nargs=* -bang Q :quit<bang> <args>
 
 " Turn off syntax highlighting
 command! C nohlsearch
-
-" Align the first 'count' columns separated by one or more spaces
-function! AlignColumns(count) range
-  let lnum = 1
-  let str = ':'
-  while lnum <= a:count
-    let str = 'l' . str
-    let lnum = lnum + 1
-  endwhile
-  exec ":AlignCtrl " . str
-  " Create a random string
-  redir @s
-  ruby require 'digest/md5'; printf Digest::MD5.hexdigest(rand(50000).to_s)
-  redir END
-  let @s = strpart(@s, 1, strlen(@s) - 1)
-  " Replace spaces with it
-  silent exec ":" . a:firstline . "," . a:lastline . "s/\\s\\+/" . @s . "/g"
-  " Align columns separated by that string
-  exec ":" . a:firstline . "," . a:lastline . "Align " . @s
-  " Bring back the spaces
-  silent exec ":" . a:firstline . "," . a:lastline . "s/" . @s . "/ /g"
-  " Clear the search pattern register
-  exec ":C"
-endfunction
-
-command! -nargs=* -range Al <line1>,<line2>call AlignColumns(<args>)
 "}}}
 " Language maps {{{
 "---------------------------------------------------------------------------------
