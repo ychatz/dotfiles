@@ -9,8 +9,7 @@ set nocompatible " Just in case
 set backspace=indent,eol,start
 
 syntax on
-set number
-set relativenumber " Experimental
+set nonumber relativenumber " Experimental
 set ruler
 
 set scrolloff=3
@@ -54,7 +53,7 @@ else
     let &t_Co=16
   endif
 
-  color molokai
+  color yannis256
 
   " Enable the mouse
   set mouse=a
@@ -85,7 +84,7 @@ set hlsearch
 
 set directory=/tmp
 
-set list listchars=trail:·
+" set list listchars=trail:·
 
 " Terminal-consistent shortcut keys for command line
 cnoremap <C-A> <Home>
@@ -93,6 +92,7 @@ cnoremap <C-K> <C-\>estrpart(getcmdline(), 0, getcmdpos() - 1)<CR>
 cnoremap <C-O> <CR>
 
 " Window navigation
+set winminheight=0
 nnoremap <C-H> <C-W>h
 nnoremap <C-J> <C-W>j
 nnoremap <C-K> <C-W>k
@@ -129,17 +129,63 @@ vnoremap <silent> # :<C-U>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
 
 " }}}
-" File Types {{{
+" File Types / Autocommands {{{
 "---------------------------------------------------------------------------------
 
 autocmd Filetype gitcommit set expandtab textwidth=68 spell
-autocmd Filetype ruby      set expandtab textwidth=80 tabstop=2 softtabstop=2 shiftwidth=2 formatoptions+=c
+autocmd Filetype ruby      set expandtab textwidth=80 tabstop=2 softtabstop=2 shiftwidth=2 formatoptions+=c path=.,,
 autocmd FileType vim       set expandtab shiftwidth=2 softtabstop=2 keywordprg=:help
-autocmd FileType c         set makeprg=gcc\ -O2
+autocmd FileType c         set softtabstop=4 makeprg=gcc\ -O2
 autocmd FileType cpp       set makeprg=g++
 
+" autocmd WinEnter *         if &buftype != 'quickfix' | wincmd _ | endif
+
 " Don't highlight the cursor line on the quickfix window
-autocmd BufReadPost quickfix  setlocal nocursorline
+autocmd BufReadPost quickfix setlocal nocursorline
+
+" Maximize the window after entering it, be sure to keep the quickfix window
+" at the specified height.
+" From http://vim.wikia.com/wiki/Always_keep_quickfix_window_at_specified_height
+au WinEnter * call MaximizeAndResizeQuickfix(10)
+
+" Maximize current window and set the quickfix window to the specified height.
+function MaximizeAndResizeQuickfix(quickfixHeight)
+  " Redraw after executing the function.
+  set lazyredraw
+  " Ignore WinEnter events for now.
+  set ei=WinEnter
+  " Maximize current window.
+  wincmd _
+  " If the current window is the quickfix window
+  if (getbufvar(winbufnr(winnr()), "&buftype") == "quickfix")
+    " Maximize previous window, and resize the quickfix window to the
+    " specified height.
+    wincmd p
+    resize
+    wincmd p
+    exe "resize " . a:quickfixHeight
+  else
+    " Current window isn't the quickfix window, loop over all windows to
+    " find it (if it exists...)
+    let i = 1
+    let currBufNr = winbufnr(i)
+    while (currBufNr != -1)
+      " If the buffer in window i is the quickfix buffer.
+      if (getbufvar(currBufNr, "&buftype") == "quickfix")
+        " Go to the quickfix window, set height to quickfixHeight, and jump to
+        " the previous window.
+        exe i . "wincmd w"
+        exe "resize " . a:quickfixHeight
+        wincmd p
+        break
+      endif
+      let i = i + 1
+      let currBufNr = winbufnr(i)
+    endwhile
+  endif
+  set ei-=WinEnter
+  set nolazyredraw
+endfunction
 " }}}
 " Ruby refactoring {{{
 "---------------------------------------------------------------------------------
@@ -207,7 +253,9 @@ let g:CommandTAlwaysShowDotFiles = 1
 " Ctrl-W opens current file in split window
 let g:CommandTAcceptSelectionSplitMap = '<C-w>'
 " No more than 5 lines
-let g:CommandTMaxHeight = 5
+let g:CommandTMaxHeight = 7
+" Ignore certain filetypes
+set wildignore=*.o,*.out
 
 " }}}
 " Leader key mappings {{{
@@ -223,6 +271,7 @@ let mapleader = ' '
 "   s         : Remove trailing whitespaces and empty lines from the EOF
 "   c         : Save, compile and run (if the compilation was successful)
 "   f         : Open Command-T
+"   t         : Open Command-T for tags
 "   om        : Open Command-T with the directory set to models
 "   oc        : Open Command-T with the directory set to controllers
 "   ov        : Open Command-T with the directory set to views
@@ -277,6 +326,7 @@ endfunction
 map <leader>c :call CompileAndRun()<cr>
 
 " Command-T shortcuts
+map <leader>t :CommandTTag<cr>
 map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
 map <leader>ov :CommandTFlush<cr>\|:CommandT app/views<cr>
 map <leader>oc :CommandTFlush<cr>\|:CommandT app/controllers<cr>
